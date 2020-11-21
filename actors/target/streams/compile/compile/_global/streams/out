@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/home/delcin/codes/scala/pragmatic_scala/actors/src/main/scala/sim/Lift.scala:10:31: '}' expected but eof found.[0m
+[0m[[0m[31merror[0m] [0m[0m  // Lift is going to receive [0m
+[0m[[0m[31merror[0m] [0m[0m                              ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

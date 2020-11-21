@@ -1,0 +1,5 @@
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [actors / Compile / runMain] Found inputs: /home/delcin/codes/scala/pragmatic_scala/actors/*.{java,scala},/home/delcin/codes/scala/pragmatic_scala/actors/src/main/java/**/*.{java,scala},/home/delcin/codes/scala/pragmatic_scala/actors/src/main/resources/**/*,/home/delcin/codes/scala/pragmatic_scala/actors/src/main/scala/**/*.{java,scala},/home/delcin/codes/scala/pragmatic_scala/actors/src/main/scala-2.12/**/*.{java,scala}[0m
+[0m[[0m[0minfo[0m] [0m[0m1. Monitoring source files for actors/runMain Test...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received input event: Run().[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received input event: Run().[0m
