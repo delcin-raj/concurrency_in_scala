@@ -1,0 +1,30 @@
+Assuming that the reader has a general understanding of how native threads
+work (JVM maps to native threads), let's discuss the limitations of threads
+in the context of communicating objects.
+
+What do I mean by communicating objects?
+	Think of a server which is tasked to serve millions of users.
+Efficiency is constrained by IO latency for the most part and the perfomance
+is directly proportional to the number of active objects* that are available
+to serve the users. ( I said active objects because the number of threads
+are actually constrained by the OS, most of the frameworks like AKKA provide
+abstraction over that). 
+So given that we have on average 50 to 200 threads is a typical computer 
+how do we serve millions of users? By factoring into the fact that most
+of the users are going to be idle majority of the time by for a short span
+of time we are going to observe burst in the usage?
+
+	One possible solution is that we have to provide an abstraction over OS
+threads and run a supervisor program which is tasked to wake up the sleeping objects and interrupt the active objects as needed. The process is called event 
+loop.
+
+	akka provides a similar abstraction over OS and the actors are 
+the communicating object who coordinate with each other by passing messages.
+It comes with inbuilt scheduling and fault tolerant mechanisms which fulfills 
+desired properties like liveliness, reactive, durable and robust etc.,
+
+NOTE: For computationally heavy tasks like scientific computing and machine 
+learning direct mapping to native thread would be an optimal solution for the 
+most part. Because communication has network latency built on top of it.
+
+

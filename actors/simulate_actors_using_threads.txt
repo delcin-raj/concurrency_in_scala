@@ -1,0 +1,21 @@
+For experimental purposes one could create a worker thread pool
+to simulate actor model.
+
+The idea is that each thread has an internal message queue.
+For example let t1 and t2 be two threads. If t2 wants to communicate
+with t1 it will do t1.messageQueue.enqueue(message). But what if 
+multiple threads want to communicate with t1 simultaneously?
+
+Solution:
+	protect the queue of each thread using locks or compare ans swap
+mechanisms so that messages of all the other threads are serialized and not
+lost. 
+
+What about scheduling?
+	One could create a supervisor thread whose only role is to manage the
+worker threads based on the input from the environent(client). It should 
+take care of scheduling.
+
+Each worker thread should be mapped to a service,so that the supervisor thread
+can notify the worker thread when the respective service is requested.
+ 
