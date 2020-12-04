@@ -3,8 +3,8 @@ package exercises.simulations
 import scala.collection.mutable
 
 object ActorSim {
-  val numActors = 2;
-  val actors = new Array[Actor](2)
+  val numActors = 2
+  val actors = new Array[Actor](numActors)
 
   class Mail(val senderID: Int, val receiverID: Int, val message: String)
 
