@@ -1,5 +1,7 @@
 package exercises.simulations
 
+import java.io.{File, FileWriter}
+
 import scala.collection.mutable
 
 object LiftSimExperiment extends App {
@@ -32,6 +34,7 @@ object LiftSimExperiment extends App {
     val dispatchLock = new Object
     val receiveLock = new Object
 
+
     override def run(): Unit = {
       Thread.sleep(1000)
       while(true) {
@@ -54,18 +57,31 @@ object LiftSimExperiment extends App {
         // different passengers can enter different lifts.
         // If only one lock was used for the entire while loop then only one lift will be filled
         dispatchLock.synchronized{
-        if (waitList.nonEmpty) {
-          // passengers are getting into the lift
-          // let say it takes 1 to 3 second to dispatch 1 passenger
-          Thread.sleep((rand.nextInt(3) + 1) * 1000)
-          passengers.enqueue(waitList.dequeue())
+          if (waitList.nonEmpty) {
+            // passengers are getting into the lift
+            // let say it takes 1 to 3 second to dispatch 1 passenger
+            Thread.sleep((rand.nextInt(3) + 1) * 1000)
+            passengers.enqueue(waitList.dequeue())
+          }
         }
-      }
       }
       waitStatus(id) = false
     }
 
-
+    def write(p: Passenger): Unit = {
+      import java.io.IOException
+      /* Creating new File *//* Creating new File */
+      try {
+        val file = new File("src/main/scala/exercises/simulations/floor_" + id)
+        val fileWriter = new FileWriter(file,true) // append = true
+        fileWriter.write(p.toString + "\n")
+        fileWriter.close()
+      } catch {
+        case e: IOException =>
+          System.out.println("An error occurred.")
+          e.printStackTrace()
+      }
+    }
 
     def receivePassengers(incoming: mutable.Queue[Passenger],liftId: Int): Unit = {
       // the if condition below checks whether all passengers gets dropped to their destination
@@ -74,7 +90,7 @@ object LiftSimExperiment extends App {
           // similarly it takes 1 to 10 seconds for a passenger to get out of the
           Thread.sleep((rand.nextInt(10) + 1) * 1000)
           arrivedList.push(p)
-          println(p + " from " + liftId)
+          write(p)
         }
       } else {
         println("There is a mistake")
@@ -95,7 +111,6 @@ object LiftSimExperiment extends App {
     var passengers = new mutable.Queue[Passenger]()
 
     override def run(): Unit = {
-      Thread.sleep(1000)
       while (true) lock.synchronized{
         if (requests.isEmpty && passengers.isEmpty) lock.wait()
         // else either passengers or requests is non Empty or both
@@ -145,18 +160,18 @@ object LiftSimExperiment extends App {
   }
 
   // creating lifts
-  for (i <- 0 until numFloors) {
-    floors(i) = new Floor(i)
-  }
-
-  // starting floor
-  for (i <- 0 until numFloors) {
-    floors(i).start()
+  for (i <- 0 until numLifts) {
+    lifts(i) = new Lift(i)
   }
 
   // starting lifts
   for (i <- 0 until numLifts) {
     lifts(i).start()
+  }
+
+  // starting floors
+  for (i <- 0 until numFloors) {
+    floors(i).start()
   }
 
   // creating passengers
