@@ -1,2 +1,2 @@
-[debug] Created transactional ClassFileManager with tempDir = /home/delcin/IdeaProjects/scala_concurrency/project/target/scala-2.12/sbt-1.0/classes.bak
-[debug] Removing the temporary directory used for backing up class files: /home/delcin/IdeaProjects/scala_concurrency/project/target/scala-2.12/sbt-1.0/classes.bak
+[debug] Created transactional ClassFileManager with tempDir = /home/delcin/IdeaProjects/concurrency_in_scala/scala_concurrency/project/target/scala-2.12/sbt-1.0/classes.bak
+[debug] Removing the temporary directory used for backing up class files: /home/delcin/IdeaProjects/concurrency_in_scala/scala_concurrency/project/target/scala-2.12/sbt-1.0/classes.bak
