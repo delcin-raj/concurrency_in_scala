@@ -50,12 +50,17 @@ object LiftSimExperiment extends App {
     // So we don't need any lock
     def dispatch(passengers: mutable.Queue[Passenger]): Unit = {
       while (dispatchLock.synchronized(waitList.nonEmpty)) {
-        if (dispatchLock.synchronized(waitList.nonEmpty)) {
+        // It is doubly guarded so that when more than one list reaches a floor
+        // different passengers can enter different lifts.
+        // If only one lock was used for the entire while loop then only one lift will be filled
+        dispatchLock.synchronized{
+        if (waitList.nonEmpty) {
           // passengers are getting into the lift
           // let say it takes 1 to 3 second to dispatch 1 passenger
           Thread.sleep((rand.nextInt(3) + 1) * 1000)
           passengers.enqueue(waitList.dequeue())
         }
+      }
       }
       waitStatus(id) = false
     }
@@ -142,6 +147,16 @@ object LiftSimExperiment extends App {
   // creating lifts
   for (i <- 0 until numFloors) {
     floors(i) = new Floor(i)
+  }
+
+  // starting floor
+  for (i <- 0 until numFloors) {
+    floors(i).start()
+  }
+
+  // starting lifts
+  for (i <- 0 until numLifts) {
+    lifts(i).start()
   }
 
   // creating passengers
